@@ -1,0 +1,11 @@
+[package]
+name = "lockdown-explore"
+version = "0.1.0"
+authors = ["David Weinstein <dweinst@insitusec.com>"]
+
+[dependencies]
+plist = "0.0.12"
+glob = "*"
+openssl = { version = "0.7.14", path = "../rust-openssl/openssl" }
+rustc-serialize = "0.3"
+
