@@ -7,7 +7,6 @@ use plist::Plist;
 use std::path::PathBuf;
 use std::fs::File;
 use glob::glob;
-use std::io::Cursor;
 use openssl::crypto::hash::Type::SHA1;
 use rustc_serialize::hex::ToHex;
 
@@ -38,8 +37,7 @@ fn load_plist (path: &PathBuf) {
 // }
 
 fn read_pem (data: &Vec<u8>) {
-    let buff = Cursor::new(data);
-    let cert = openssl::x509::X509::from_pem(buff.into_inner())
+    let cert = openssl::x509::X509::from_pem(data)
         .ok().expect("Failed to load PEM");
     let fingerprint = cert.fingerprint(SHA1).unwrap();
     println!("finerprint: {:?}", fingerprint.to_hex());
