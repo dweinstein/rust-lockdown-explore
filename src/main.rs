@@ -22,9 +22,9 @@ fn load_plist (path: &PathBuf) {
 
     match plist {
         Plist::Dictionary(dict) => {
-            for key in &RELEVANT {
-                match dict.get(*key) {
-                    Some(&Plist::Data(ref data)) => read_pem(&data),
+            for &key in RELEVANT.iter() {
+                match dict.get(key) {
+                    Some(&Plist::Data(ref data)) => read_pem(data),
                     _ => ()
                 }
             }
@@ -33,18 +33,15 @@ fn load_plist (path: &PathBuf) {
     }
 }
 
-// fn process_dict(dict: &Plist::Dictionary) {
-// }
-
 fn read_pem (data: &Vec<u8>) {
     let cert = openssl::x509::X509::from_pem(data)
         .ok().expect("Failed to load PEM");
     let fingerprint = cert.fingerprint(SHA1).unwrap();
-    println!("finerprint: {:?}", fingerprint.to_hex());
     let not_before = cert.not_before();
     let not_after = cert.not_after();
-    not_before.print();
-    not_after.print();
+    println!("fingerprint={}", fingerprint.to_hex());
+    println!("notBefore={}", not_before);
+    println!("notAfter={}", not_after);
 }
 
 
