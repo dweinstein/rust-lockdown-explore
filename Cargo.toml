@@ -6,6 +6,6 @@ authors = ["David Weinstein <dweinst@insitusec.com>"]
 [dependencies]
 plist = "0.0.12"
 glob = "*"
-openssl = { version = "0.7.14", path = "../rust-openssl/openssl" }
+openssl = { git = "https://github.com/dweinstein/rust-openssl.git", branch="asn1_expiration" }
 rustc-serialize = "0.3"
 
